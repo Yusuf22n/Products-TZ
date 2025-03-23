@@ -7,6 +7,8 @@ import { Filter } from "../features/filter/index";
 import { ProductCard } from "../entities/ProductCard/index";
 import { Header } from "../widgets/header/index";
 
+import { Skeleton } from "antd";
+
 const Catalog = () => {
   const dispatch = useDispatch();
   const { items, status } = useSelector((state) => state.products);
@@ -37,11 +39,24 @@ const Catalog = () => {
         <SearchInput onSearch={setSearchTerm} />
         <Filter onSortChange={setSortOrder} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-        {filteredItems.map((product) => (
-          <ProductCard key={product.id} product={product} isInCart={checkIfProductInCart(cart, product.id)} />
-        ))}
-      </div>
+
+      {status === "loading" ? (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          {[...Array(6)].map((_, index) => (
+            <Skeleton key={index} active className="p-4 rounded-lg shadow-lg h-[330px] w-full" />
+          ))}
+        </div>
+      ) : status === "failed" ? (
+        <div className="text-center text-red-500 text-xl mt-8">
+          Ошибка загрузки данных!
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          {filteredItems.map((product) => (
+            <ProductCard key={product.id} product={product} isInCart={checkIfProductInCart(cart, product.id)} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
