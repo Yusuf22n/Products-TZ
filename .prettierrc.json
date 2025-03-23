@@ -1,0 +1,14 @@
+{
+  "arrowParens": "avoid",
+  "importOrder": ["^src/", "^@luomus", "^[./]"],
+  "importOrderCaseInsensitive": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "printWidth": 80,
+  "proseWrap": "always",
+  "singleQuote": true,
+  "tailwindFunctions": ["twMerge"]
+}
